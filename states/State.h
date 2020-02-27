@@ -5,6 +5,8 @@
 
 namespace vtx {
 
+	class Application;
+
 	class State
 	{
 
@@ -16,14 +18,11 @@ namespace vtx {
 		virtual void Resume() = 0;
 
 		//virtual void HandleEvents() = 0;
-		virtual void FixedUpdate() = 0;
-		virtual void VariableUpdate(float delta) = 0;
-		virtual void Draw() = 0;
+		virtual void FixedUpdate(Application*) = 0;
+		virtual void VariableUpdate(Application*, float delta) = 0;
+		virtual void Draw(Application*) = 0;
 
-		void ChangeState()
-		{
-
-		}
+		void ChangeState(Application* app, State* state);
 
 	protected:
 		State() { }

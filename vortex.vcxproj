@@ -152,7 +152,6 @@
     <ClCompile Include="core\Application.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
-    <ClCompile Include="states\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assets\AssetManager.h" />
@@ -161,7 +160,6 @@
     <ClInclude Include="Sandbox\States\GameState.h" />
     <ClInclude Include="Sandbox\States\States.h" />
     <ClInclude Include="states\State.h" />
-    <ClInclude Include="states\StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

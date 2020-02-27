@@ -9,3 +9,9 @@ int main()
 
     return exitCode;
 }
+
+// Questions
+// 1. should i pass a window to the draw functions?
+
+// Ideas
+// 1. make drawing shortcut in application class

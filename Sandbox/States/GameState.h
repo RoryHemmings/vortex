@@ -15,6 +15,9 @@ public:
 	void Init()
 	{
 		std::cout << "Created GameState" << std::endl;
+
+		circle = sf::CircleShape(50.0f);
+		circle.setFillColor(sf::Color(100, 250, 50));
 	}
 
 	void Cleanup()
@@ -32,19 +35,19 @@ public:
 
 	}
 
-	void FixedUpdate()
+	void FixedUpdate(vtx::Application* app)
 	{
 		
 	}
 
-	void VariableUpdate(float delta)
+	void VariableUpdate(vtx::Application* app, float delta)
 	{
 		
 	}
 
-	void Draw()
+	void Draw(vtx::Application* app)
 	{
-
+		app->GetRenderWindow().draw(circle);
 	}
 
 	static GameState* Instance()
@@ -58,6 +61,8 @@ public:
 private:
 	static GameState* instance;
 	GameState() { }
+
+	sf::CircleShape circle;
 };
 
 GameState* GameState::instance = nullptr;

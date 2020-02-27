@@ -25,7 +25,7 @@ namespace vtx
 
         sf::Int32 anUpdateNext = anUpdateClock.getElapsedTime().asMilliseconds();
 
-        while (running) {
+        while (window.isOpen() && running) {
             if (!states.empty()) {
                 State* currentState = states.back();    // Top of the stack
 
@@ -37,17 +37,26 @@ namespace vtx
 
                 // Process our UpdateFixed portion of the game loop
                 while ((anUpdateTime - anUpdateNext) >= fixedUpdateRate && anUpdates++ < (1 / fixedUpdateRate)) {
+                    // Check if window is trying to be closed
+                    sf::Event event;
+                    while (window.pollEvent(event)) {
+                        if (event.type == sf::Event::Closed)
+                            window.close();
+                    }
+
                     // Let the current active state perform fixed updates next
-                    currentState->FixedUpdate();
+                    currentState->FixedUpdate(this);
 
                     // Compute the next appropriate UpdateFixed time
                     anUpdateNext += fixedUpdateRate;
                 }
 
-                currentState->VariableUpdate(anFrameClock.restart().asSeconds());
+                currentState->VariableUpdate(this, anFrameClock.restart().asSeconds());
 
-                // Let the current active state draw stuff
-                currentState->Draw();
+                // Clear and draw the screen
+                window.clear(sf::Color::Black);
+                currentState->Draw(this);
+                window.display();
 
                 // Display Render window to the screen
                 window.display();

@@ -3,11 +3,10 @@
 #ifndef VTX_APPLICATION_H
 #define VTX_APPLICATION_H
 
-#include "SFML/Window/Window.hpp"
+#include <SFML/Graphics.hpp>
 
 #include <string>
-
-#include "../states/StateManager.h"
+#include "../states/State.h"
 
 namespace vtx
 {
@@ -27,6 +26,8 @@ namespace vtx
 		void PushState(State* state);
 		void PopState();
 
+		sf::RenderWindow& GetRenderWindow() { return window; }
+
 		int GetWidth() const { return width; }
 		int GetHeight() const { return height; }
 
@@ -39,7 +40,7 @@ namespace vtx
 		void initWindow();
 
 	protected:
-		sf::Window window;
+		sf::RenderWindow window;
 
 		std::vector<State*> states;
 
