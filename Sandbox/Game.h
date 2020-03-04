@@ -10,8 +10,8 @@ class Game : public vtx::Application
 {
 
 public:
-	Game(const std::string& title, int width, int height, float fixedUpdateRate) 
-		: Application(title, width, height, fixedUpdateRate) { }
+	Game(const std::string& title, int width, int height, float fixedUpdateRate, const std::string& assetFolder)
+		: Application(title, width, height, fixedUpdateRate, assetFolder) { }
 
 private:
 

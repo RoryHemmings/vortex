@@ -148,12 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assets\AssetHolder.cpp" />
     <ClCompile Include="assets\AssetManager.cpp" />
     <ClCompile Include="core\Application.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assets\AssetHolder.h" />
     <ClInclude Include="assets\AssetManager.h" />
     <ClInclude Include="core\Application.h" />
     <ClInclude Include="Sandbox\Game.h" />

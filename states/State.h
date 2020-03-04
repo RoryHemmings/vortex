@@ -11,7 +11,7 @@ namespace vtx {
 	{
 
 	public:
-		virtual void Init() = 0;
+		virtual void Init(Application*) = 0;
 		virtual void Cleanup() = 0;
 
 		virtual void Pause() = 0;

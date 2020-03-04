@@ -12,12 +12,12 @@ class GameState : public vtx::State
 {
 
 public:
-	void Init()
+	void Init(vtx::Application* app)
 	{
 		std::cout << "Created GameState" << std::endl;
-
-		circle = sf::CircleShape(50.0f);
-		circle.setFillColor(sf::Color(100, 250, 50));
+		tree = sf::Sprite();
+		tree.setTexture(app->GetAssetHolder().textures.Get("Abe"));
+		tree.scale(sf::Vector2f(10, 10));
 	}
 
 	void Cleanup()
@@ -37,17 +37,18 @@ public:
 
 	void FixedUpdate(vtx::Application* app)
 	{
-		
+		sf::Vector2f pos(tree.getPosition());
+		tree.setPosition(sf::Vector2f(pos.x + 0.001f, pos.y));
 	}
 
 	void VariableUpdate(vtx::Application* app, float delta)
 	{
-		
+		std::cout << 1/delta << std::endl;
 	}
 
 	void Draw(vtx::Application* app)
 	{
-		app->GetRenderWindow().draw(circle);
+		app->GetRenderWindow().draw(tree);
 	}
 
 	static GameState* Instance()
@@ -62,7 +63,7 @@ private:
 	static GameState* instance;
 	GameState() { }
 
-	sf::CircleShape circle;
+	sf::Sprite tree;
 };
 
 GameState* GameState::instance = nullptr;

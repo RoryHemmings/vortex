@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 
 #include <string>
+
+#include "../assets/AssetHolder.h"
 #include "../states/State.h"
 
 namespace vtx
@@ -15,12 +17,16 @@ namespace vtx
 	{
 
 	public:
-		Application(const std::string& title, int width, int height, int fixedUpdateRate=30);
+		Application(const std::string& title, 
+					int width, 
+					int height, 
+					int fixedUpdateRate=30, 
+					const std::string& assetFolder="res");
 
 		int Run();
 		void Stop() { running = false; }
 
-		//AssetManager getAssetManager();
+		AssetHolder& GetAssetHolder() { return assetHolder; }
 
 		void ChangeState(State* state);
 		void PushState(State* state);
@@ -43,6 +49,8 @@ namespace vtx
 		sf::RenderWindow window;
 
 		std::vector<State*> states;
+
+		AssetHolder assetHolder;
 
 		std::string title;
 		int width, height;
