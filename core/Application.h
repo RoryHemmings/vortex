@@ -23,6 +23,9 @@ namespace vtx
 					int fixedUpdateRate=30, 
 					const std::string& assetFolder="res");
 
+		// Prevents Memory Leaks
+		virtual ~Application() { }
+
 		int Run();
 		void Stop() { running = false; }
 

@@ -151,6 +151,7 @@
     <ClCompile Include="assets\AssetHolder.cpp" />
     <ClCompile Include="assets\AssetManager.cpp" />
     <ClCompile Include="core\Application.cpp" />
+    <ClCompile Include="entities\Entity.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="assets\AssetHolder.h" />
     <ClInclude Include="assets\AssetManager.h" />
     <ClInclude Include="core\Application.h" />
+    <ClInclude Include="entities\Entity.h" />
     <ClInclude Include="Sandbox\Game.h" />
     <ClInclude Include="Sandbox\States\GameState.h" />
     <ClInclude Include="Sandbox\States\States.h" />

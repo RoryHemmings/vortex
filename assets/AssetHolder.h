@@ -21,9 +21,6 @@ namespace vtx
 
 		AssetManager<sf::Texture> textures;
 
-	private:
-		
-
 	};
 
 }

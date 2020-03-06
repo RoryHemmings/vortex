@@ -14,7 +14,6 @@ class GameState : public vtx::State
 public:
 	void Init(vtx::Application* app)
 	{
-		std::cout << "Created GameState" << std::endl;
 		tree = sf::Sprite();
 		tree.setTexture(app->GetAssetHolder().textures.Get("Abe"));
 		tree.scale(sf::Vector2f(10, 10));
@@ -43,7 +42,7 @@ public:
 
 	void VariableUpdate(vtx::Application* app, float delta)
 	{
-		std::cout << 1/delta << std::endl;
+		
 	}
 
 	void Draw(vtx::Application* app)

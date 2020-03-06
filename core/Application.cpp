@@ -97,7 +97,7 @@ namespace vtx
 	}
 
 	void Application::initWindow()
-	{	
+	{
 		window.create(sf::VideoMode(width, height), title);
 	}
 }
