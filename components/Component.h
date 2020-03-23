@@ -1,29 +1,26 @@
 #pragma once
 
 #ifndef VTX_COMPONENT_H
-#define VTX_COMPONENT
+#define VTX_COMPONENT_H
 
 #include <string>
 
 namespace vtx
 {
 
+	class Application;
+
 	class Component
 	{
 
 	public:
-		Component(const std::string& name)
-			: name(name)
+		Component()
 		{ }
-		
-		virtual void draw() = 0;
-
-		virtual const std::string GetName() const { return name; }
-
 		virtual ~Component() { }
-
-	private:
-		std::string name;
+		
+		virtual void FixedUpdate(Application* app) = 0;
+		virtual void VariableUpdate(Application* app, float delta) = 0;
+		virtual void Draw(Application* app) = 0;
 
 	};
 

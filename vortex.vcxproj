@@ -154,15 +154,19 @@
     <ClCompile Include="entities\Entity.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
+    <ClCompile Include="states\States.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assets\AssetHolder.h" />
     <ClInclude Include="assets\AssetManager.h" />
+    <ClInclude Include="components\Component.h" />
+    <ClInclude Include="components\TransformComponent.h" />
     <ClInclude Include="core\Application.h" />
     <ClInclude Include="entities\Entity.h" />
+    <ClInclude Include="Sandbox\Entities\Player.h" />
     <ClInclude Include="Sandbox\Game.h" />
     <ClInclude Include="Sandbox\States\GameState.h" />
-    <ClInclude Include="Sandbox\States\States.h" />
+    <ClInclude Include="states\States.h" />
     <ClInclude Include="states\State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

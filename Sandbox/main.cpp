@@ -12,6 +12,7 @@ int main()
 
 // Questions
 // 1. should i pass a window to the draw functions?
+// 2. Do i define return types as references?
 
 // Ideas
 // 1. make drawing shortcut in application class

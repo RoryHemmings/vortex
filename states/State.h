@@ -3,6 +3,10 @@
 #ifndef VTX_STATE_H
 #define VTX_STATE_H
 
+#include <string>
+
+#include "../States/States.h"
+
 namespace vtx {
 
 	class Application;
@@ -11,22 +15,25 @@ namespace vtx {
 	{
 
 	public:
-		virtual void Init(Application*) = 0;
+		State(Application* app) 
+			: app(app)
+			{ }
+
 		virtual void Cleanup() = 0;
 
 		virtual void Pause() = 0;
 		virtual void Resume() = 0;
 
 		//virtual void HandleEvents() = 0;
-		virtual void FixedUpdate(Application*) = 0;
-		virtual void VariableUpdate(Application*, float delta) = 0;
-		virtual void Draw(Application*) = 0;
+		virtual void FixedUpdate() = 0;
+		virtual void VariableUpdate(float delta) = 0;
+		virtual void Draw() = 0;
 
-		void ChangeState(Application* app, State* state);
+		void ChangeState(const std::string& id);
+		// Entity Manager
 
 	protected:
-		State() { }
-		// GameObject Vector
+		Application* app;
 
 	};
 }

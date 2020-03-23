@@ -3,7 +3,7 @@
 namespace vtx
 {
 
-	Component& Entity::GetComponent(const std::string& name)
+	/*Component& Entity::GetComponent(const std::string& name)
 	{
 		std::vector<Component>::iterator iter = components.begin();
 		while (iter != components.end()) {
@@ -14,6 +14,6 @@ namespace vtx
 		}
 
 		throw "Entity has no component " + name;
-	}
+	}*/
 
 }

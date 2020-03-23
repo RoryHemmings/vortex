@@ -18,45 +18,32 @@ namespace vtx
 
 		init();
 
-		sf::Clock anUpdateClock;
-		sf::Clock anFrameClock;
-
-		anUpdateClock.restart();
-
-		sf::Int32 anUpdateNext = anUpdateClock.getElapsedTime().asMilliseconds();
+		sf::Clock clock;
+		sf::Time delta;
 
 		while (window.isOpen() && running) {
-			if (!states.empty()) {
-				State* currentState = states.back();    // Top of the stack
+			if (!States::IsEmpty()) {
+				State& currentState = States::GetCurrentState();
 
-				// Count the number of sequential UpdateFixed loop calls
-				sf::Uint32 anUpdates = 0;
+				clock.restart();
 
-				// Make note of the current update time
-				sf::Int32 anUpdateTime = anUpdateClock.getElapsedTime().asMilliseconds();
-
-				// Process our UpdateFixed portion of the game loop
-				while ((anUpdateTime - anUpdateNext) >= fixedUpdateRate && anUpdates++ < (1 / fixedUpdateRate)) {
-					// Check if window is trying to be closed
+				while (clock.getElapsedTime().asSeconds() < fixedUpdateRate) {
 					sf::Event event;
 					while (window.pollEvent(event)) {
 						if (event.type == sf::Event::Closed)
 							window.close();
 					}
 
-					// Let the current active state perform fixed updates next
-					currentState->FixedUpdate(this);
+					currentState.VariableUpdate(clock.getElapsedTime().asSeconds() - delta.asSeconds());
+					delta = clock.getElapsedTime();
 
-					// Compute the next appropriate UpdateFixed time
-					anUpdateNext += fixedUpdateRate;
+					// Clear and draw the screen
+					window.clear(sf::Color::Black);
+					currentState.Draw();
+					window.display();
 				}
 
-				currentState->VariableUpdate(this, anFrameClock.restart().asSeconds());
-
-				// Clear and draw the screen
-				window.clear(sf::Color::Black);
-				currentState->Draw(this);
-				window.display();
+				currentState.FixedUpdate();
 			}
 		}
 
@@ -65,36 +52,58 @@ namespace vtx
 		return 0;
 	}
 
-	void Application::ChangeState(State* state)
-	{
-		if (!states.empty()) {
-			states.back()->Cleanup();
-			states.pop_back();
-		}
+	//int Application::Run()
+	//{
+	//	running = true;
 
-		states.push_back(state);
-		states.back()->Init(this);
-	}
+	//	init();
 
-	void Application::PushState(State* state)
-	{
-		if (!states.empty())
-			states.back()->Pause();
+	//	sf::Clock anUpdateClock;
+	//	sf::Clock anFrameClock;
 
-		states.push_back(state);
-		states.back()->Init(this);
-	}
+	//	anUpdateClock.restart();
 
-	void Application::PopState()
-	{
-		if (!states.empty()) {
-			states.back()->Cleanup();
-			states.pop_back();
-		}
+	//	sf::Int32 anUpdateNext = anUpdateClock.getElapsedTime().asMilliseconds();
 
-		if (!states.empty())
-			states.back()->Resume();
-	}
+	//	while (window.isOpen() && running) {
+	//		if (!States::IsEmpty()) {
+	//			State& currentState = States::GetCurrentState(); 
+
+	//			// Count the number of sequential UpdateFixed loop calls
+	//			sf::Uint32 anUpdates = 0;
+
+	//			// Make note of the current update time
+	//			sf::Int32 anUpdateTime = anUpdateClock.getElapsedTime().asMilliseconds();
+
+	//			// Process our UpdateFixed portion of the game loop
+	//			while ((anUpdateTime - anUpdateNext) >= fixedUpdateRate && anUpdates++ < (1 / fixedUpdateRate)) {
+	//				// Check if window is trying to be closed
+	//				sf::Event event;
+	//				while (window.pollEvent(event)) {
+	//					if (event.type == sf::Event::Closed)
+	//						window.close();
+	//				}
+
+	//				// Let the current active state perform fixed updates next
+	//				currentState.FixedUpdate();
+
+	//				// Compute the next appropriate UpdateFixed time
+	//				anUpdateNext += fixedUpdateRate;
+	//			}
+
+	//			currentState.VariableUpdate(anFrameClock.restart().asSeconds());
+
+	//			// Clear and draw the screen
+	//			window.clear(sf::Color::Black);
+	//			currentState.Draw();
+	//			window.display();
+	//		}
+	//	}
+
+	//	cleanup();
+
+	//	return 0;
+	//}
 
 	void Application::initWindow()
 	{

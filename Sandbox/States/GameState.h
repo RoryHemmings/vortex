@@ -6,17 +6,18 @@
 #include <iostream>
 #include <memory>
 
+#include "../Entities/Player.h"
 #include "../../states/State.h"
 
 class GameState : public vtx::State
 {
 
 public:
-	void Init(vtx::Application* app)
+	GameState(vtx::Application* app)
+		: State(app)
+		, player(app, 100, 100)
 	{
-		tree = sf::Sprite();
-		tree.setTexture(app->GetAssetHolder().textures.Get("Abe"));
-		tree.scale(sf::Vector2f(10, 10));
+		
 	}
 
 	void Cleanup()
@@ -34,37 +35,24 @@ public:
 
 	}
 
-	void FixedUpdate(vtx::Application* app)
+	void FixedUpdate()
 	{
-		sf::Vector2f pos(tree.getPosition());
-		tree.setPosition(sf::Vector2f(pos.x + 0.001f, pos.y));
+		player.FixedUpdate();
 	}
 
-	void VariableUpdate(vtx::Application* app, float delta)
+	void VariableUpdate(float delta)
 	{
-		
+		player.VariableUpdate(delta);
 	}
 
-	void Draw(vtx::Application* app)
+	void Draw()
 	{
-		app->GetRenderWindow().draw(tree);
-	}
-
-	static GameState* Instance()
-	{
-		if (instance == 0)
-			instance = new GameState();
-
-		return instance;
+		player.Draw();
 	}
 
 private:
-	static GameState* instance;
-	GameState() { }
+	Player player;
 
-	sf::Sprite tree;
 };
-
-GameState* GameState::instance = nullptr;
 
 #endif

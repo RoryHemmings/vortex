@@ -3,8 +3,9 @@
 #include <string>
 
 #include "../core/Application.h"
+#include "../States/States.h"
 
-#include "States/States.h"
+#include "States/GameState.h"
 
 class Game : public vtx::Application
 {
@@ -17,14 +18,16 @@ private:
 
 	void init()
 	{
-		ChangeState(States::GAME_STATE);
+		vtx::States::AddState(new GameState(this), "GameState");
+		vtx::States::SetCurrentState("GameState");
 
 		initWindow();
 	}
 
 	void cleanup()
 	{
-
+		// Cleanup states
+		vtx::States::GetCurrentState().Cleanup();
 	}
 
 };

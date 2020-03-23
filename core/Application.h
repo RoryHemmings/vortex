@@ -9,6 +9,7 @@
 
 #include "../assets/AssetHolder.h"
 #include "../states/State.h"
+#include "../states/States.h"
 
 namespace vtx
 {
@@ -31,10 +32,6 @@ namespace vtx
 
 		AssetHolder& GetAssetHolder() { return assetHolder; }
 
-		void ChangeState(State* state);
-		void PushState(State* state);
-		void PopState();
-
 		sf::RenderWindow& GetRenderWindow() { return window; }
 
 		int GetWidth() const { return width; }
@@ -50,8 +47,6 @@ namespace vtx
 
 	protected:
 		sf::RenderWindow window;
-
-		std::vector<State*> states;
 
 		AssetHolder assetHolder;
 

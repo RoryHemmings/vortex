@@ -5,9 +5,9 @@
 namespace vtx
 {
 
-	void State::ChangeState(Application* app, State* state)
+	void State::ChangeState(const std::string& id)
 	{
-		app->ChangeState(state);
+		States::SetCurrentState(id);
 	}
 
 }

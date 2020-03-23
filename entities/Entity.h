@@ -11,23 +11,29 @@
 namespace vtx
 {
 
+	class Application;
+
 	class Entity
 	{
 
 	public:
-		Entity() { }
+		Entity(Application* app)
+			: app(app)
+			{ }
 
 		/*Entity(double x, double y)
 			needs transform as default component
 		{ }*/
 
-		Component& GetComponent(const std::string&);
+		virtual void FixedUpdate() = 0;
+		virtual void VariableUpdate(float delta) = 0;
+		virtual void Draw() = 0;
 
 		virtual ~Entity() { }
 
-	private:
+	protected:
 		// unsigned int id;
-		std::vector<Component> components;
+		Application* app;
 
 	};
 
