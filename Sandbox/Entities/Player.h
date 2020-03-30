@@ -25,6 +25,8 @@ public:
 		tree.setPosition(GetX(), 100);
 	};
 
+	Player* MakeCopy() const { return new Player(*this); }
+
 	void FixedUpdate() 
 	{
 		SetX(GetX() + 1);

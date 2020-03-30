@@ -19,6 +19,8 @@ namespace vtx {
 			: app(app)
 			{ }
 
+		virtual ~State() = default;
+
 		virtual void Cleanup() = 0;
 
 		virtual void Pause() = 0;

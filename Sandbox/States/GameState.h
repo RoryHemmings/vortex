@@ -7,17 +7,23 @@
 #include <memory>
 
 #include "../Entities/Player.h"
+
+#include "../../entities/EntityManager.h"
 #include "../../states/State.h"
 
-class GameState : public vtx::State
+class GameState : public vtx::State, public vtx::EntityManager
 {
 
 public:
 	GameState(vtx::Application* app)
 		: State(app)
-		, player(app, 100, 100)
+		, EntityManager(app)
 	{
+		Player player(app, 100, 100);
+		AddEntity(player, "player");
+
 		
+
 	}
 
 	void Cleanup()
@@ -37,21 +43,21 @@ public:
 
 	void FixedUpdate()
 	{
-		player.FixedUpdate();
+		vtx::EntityManager::FixedUpdate();
 	}
 
 	void VariableUpdate(float delta)
 	{
-		player.VariableUpdate(delta);
+		vtx::EntityManager::VariableUpdate(delta);
 	}
 
 	void Draw()
 	{
-		player.Draw();
+		vtx::EntityManager::Draw();
 	}
 
 private:
-	Player player;
+	
 
 };
 

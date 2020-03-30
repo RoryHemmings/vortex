@@ -36,6 +36,12 @@
     <ClCompile Include="states\States.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="entities\EntityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ComponentManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Application.h">
@@ -65,10 +71,19 @@
     <ClInclude Include="Sandbox\Entities\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="components\TransformComponent.h">
+    <ClInclude Include="states\States.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="states\States.h">
+    <ClInclude Include="entities\EntityManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Components.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

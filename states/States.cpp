@@ -9,7 +9,7 @@ namespace vtx
 	{
 		// If map already contains that key
 		if (states.count(id) > 0) {
-			std::cout << "State With id [" + id + "] already exists. See States::AddState(State* state, const std::string&) (States.cpp) line 12" << std::endl;
+			std::cout << "State With id [" + id + "] already exists. See vtx::States::AddState(vtx::State* state, const std::string&) (States.cpp)" << std::endl;
 			throw;
 		}
 
@@ -19,7 +19,7 @@ namespace vtx
 	void States::SetCurrentState(const std::string& id)
 	{
 		if (states.count(id) < 1) {
-			std::cout << "No State exists with id [" + id + "]" + ", See States::SetCurrentState(const std::string&) (States.cpp) line 22" << std::endl;
+			std::cout << "No State exists with id [" + id + "]" + ". See vtx::States::SetCurrentState(const std::string&) (States.cpp)" << std::endl;
 			throw;
 		}
 
