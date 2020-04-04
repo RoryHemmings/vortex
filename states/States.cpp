@@ -5,6 +5,7 @@
 namespace vtx
 {
 	
+	// Puts hollow state into memory
 	void States::AddState(State* state, const std::string& id)
 	{
 		// If map already contains that key
@@ -14,16 +15,6 @@ namespace vtx
 		}
 
 		states[id] = state;
-	}
-
-	void States::SetCurrentState(const std::string& id)
-	{
-		if (states.count(id) < 1) {
-			std::cout << "No State exists with id [" + id + "]" + ". See vtx::States::SetCurrentState(const std::string&) (States.cpp)" << std::endl;
-			throw;
-		}
-
-		current = id;
 	}
 
 	State& States::GetCurrentState()

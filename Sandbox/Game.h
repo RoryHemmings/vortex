@@ -27,7 +27,7 @@ private:
 	void cleanup()
 	{
 		// Cleanup states
-		vtx::States::GetCurrentState().Cleanup();
+		vtx::States::GetCurrentState().Unload();
 	}
 
 };

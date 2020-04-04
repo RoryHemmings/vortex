@@ -24,7 +24,7 @@ namespace vtx
 	};
 
 	template <class T>
-	class ComponentArray : IComponentArray
+	class ComponentArray : public IComponentArray
 	{
 
 	public:
@@ -32,14 +32,14 @@ namespace vtx
 			Definitions are in header file to prevent linker errors
 			With template class
 		*/
-		
+
 		void InsertData(Entity entity, T component)
 		{
 			if (entityToIndexMap.count(entity) > 0) {
-				std::cout << "Entity + [" + entity + "] already has component. See void vtx::ComponentManager<T>::InsertData(Entity entity, T component) (ComponentManager.h)" << std::endl;
+				std::cout << "Entity + [" << entity << "] already has component. See void vtx::ComponentManager<T>::InsertData(Entity entity, T component) (ComponentManager.h)" << std::endl;
 				return;
 			}
-			
+
 			/*
 				Add component to end of array
 				Adjust maps so that the entity
@@ -56,7 +56,7 @@ namespace vtx
 		void RemoveData(Entity entity)
 		{
 			if (entityToIndexMap.count(entity) < 1) {
-				std::cout << "Attempting to remove non-existent component from Entity + [" + entity + "]. See void vtx::ComponentManager<T>::RemoveData(Entity entity) (ComponentManager.h)" << std::endl;
+				std::cout << "Attempting to remove non-existent component from Entity + [" << entity << "]. See void vtx::ComponentManager<T>::RemoveData(Entity entity) (ComponentManager.h)" << std::endl;
 				return;
 			}
 
@@ -77,11 +77,11 @@ namespace vtx
 		T& GetData(Entity entity)
 		{
 			if (entityToIndexMap.count(entity) < 1) {
-				std::cout << "No Component on Entity + [" + entity + "] exists. See T& vtx::ComponentManager<T>::GetData(Entity entity) (ComponentManager.h)" << std::endl;
+				std::cout << "No Component on Entity [" << entity << "] exists. See T& vtx::ComponentManager<T>::GetData(Entity entity) (ComponentManager.h)" << std::endl;
 				throw;
 			}
 
-			return componentArray[entityToIndexMap.find(entity)];
+			return componentArray[entityToIndexMap[entity]];
 		}
 
 		void EntityDestroyed(Entity entity)
@@ -111,7 +111,7 @@ namespace vtx
 			std::string typeName = typeid(T).name();
 
 			if (componentTypes.count(typeName) > 0) {
-				//std::cout << "Component + [" + typeName + "] already exists. See void ComponentManager::RegisterComponent() (ComponentManager.h)" << std::endl;
+				//std::cout << "Component [" + typeName + "] already exists. See void ComponentManager::RegisterComponent() (ComponentManager.h)" << std::endl;
 				return;
 			}
 
@@ -127,7 +127,7 @@ namespace vtx
 			std::string typeName = typeid(T).name();
 
 			if (componentTypes.count(typeName) < 1) {
-				std::cout << "Component + [" + typeName + "] is not registered. See ComponentType ComponentManager::GetComponentType() (ComponentManager.h)" << std::endl;
+				std::cout << "Component + [" << typeName << "] is not registered. See ComponentType ComponentManager::GetComponentType() (ComponentManager.h)" << std::endl;
 				throw;
 			}
 
@@ -177,7 +177,7 @@ namespace vtx
 			std::string typeName = typeid(T).name();
 
 			if (componentTypes.count(typeName) < 1) {
-				std::cout << "No Component + [" + typeName + "] exists. See std::shared_ptr<ComponentArray<T>> ComponentManager::GetComponentArray() (ComponentManager.h)" << std::endl;
+				std::cout << "No Component + [" << typeName << "] exists. See std::shared_ptr<ComponentArray<T>> ComponentManager::GetComponentArray() (ComponentManager.h)" << std::endl;
 				throw;
 			}
 

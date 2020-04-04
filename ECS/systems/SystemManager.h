@@ -13,11 +13,17 @@
 
 namespace vtx
 {
+	class Application;
+	class EntityCoordinator;
 
 	class System
 	{
 
 	public:
+		virtual void FixedUpdate(Application* app, EntityCoordinator* entityCoordinator) { }
+		virtual void VariableUpdate(Application* app, EntityCoordinator* entityCoordinator, float delta) { }
+		virtual void Draw(Application* app, EntityCoordinator* entityCoordinator) { }
+
 		std::set<Entity> entities;
 
 	};
@@ -33,12 +39,26 @@ namespace vtx
 
 			if (systems.count(typeName) > 0) {
 				// Attempting to register system twice
-				return;
+				return std::static_pointer_cast<T>(systems[typeName]);
 			}
 
 			auto system = std::make_shared<T>();
 			systems.insert({ typeName, system });
+
 			return system;
+		}
+
+		template <class T>
+		std::shared_ptr<T> GetSystem()
+		{
+			std::string typeName = typeid(T).name();
+
+			if (systems.count(typeName) < 1) {
+				std::cout << "System [" + typeName + "] has not been registered. See std::shared_ptr<T> SystemManager::GetSystem() (SystemManager.h)" << std::endl;
+				throw;
+			}
+
+			return std::static_pointer_cast<T>(systems[typeName]);
 		}
 
 		template <class T>
@@ -64,5 +84,7 @@ namespace vtx
 	};
 
 }
+
+#include "Systems.h"
 
 #endif

@@ -12,15 +12,18 @@
 namespace vtx
 {
 	
-	class Coordinator
+	class EntityCoordinator
 	{
 
 	public:
 		void Init();
 
+		// Makes all managers hollow (Null pointers)
+		void Clear();
+
 		Entity CreateEntity() const;
 		void DestroyEntity(Entity entity);
-
+		
 		template <class T>
 		void RegisterComponent()
 		{
@@ -33,7 +36,7 @@ namespace vtx
 			componentManager->AddComponent<T>(entity, component);
 
 			auto signature = entityManager->GetSignature(entity);
-			signature.set(mComponentManager->GetComponentType<T>(), true);
+			signature.set(componentManager->GetComponentType<T>(), true);
 			entityManager->SetSignature(entity, signature);
 
 			systemManager->EntitySignatureChange(entity, signature);
@@ -67,6 +70,12 @@ namespace vtx
 		std::shared_ptr<T> RegisterSystem()
 		{
 			return systemManager->RegisterSystem<T>();
+		}
+
+		template <class T>
+		std::shared_ptr<T> GetSystem()
+		{
+			return systemManager->GetSystem<T>();
 		}
 
 		template <class T>

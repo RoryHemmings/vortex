@@ -5,7 +5,9 @@
 
 #include <string>
 
-#include "../util/Math.h"
+#include <SFML/Graphics.hpp>
+
+#include "../../util/Math.h"
 
 namespace vtx
 {
@@ -17,9 +19,15 @@ namespace vtx
 
 		struct Transfrom
 		{
-			Vec2f position;
-			float rotation;
-			Vec2f scale;
+			Vec2f position = { 0.0f, 0.0f };
+			float rotation = 0.0;
+			Vec2f scale = { 1.0f, 1.0f };
+		};
+
+		struct Renderer
+		{
+			sf::Texture texture;
+			sf::VertexArray quad = sf::VertexArray(sf::Quads, 4);
 		};
 
 		//class TransformComponent : public Component

@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "../ECS/EntityCoordinator.h"
 #include "../States/States.h"
 
 namespace vtx {
@@ -15,13 +16,22 @@ namespace vtx {
 	{
 
 	public:
-		State(Application* app) 
+		State(Application* app)
 			: app(app)
-			{ }
+		{ }
 
 		virtual ~State() = default;
 
-		virtual void Cleanup() = 0;
+		/* 
+			Fills state (Adds entity cooridinator).
+
+			Register all components, all systems, 
+			all entities, all everything here
+		*/
+		virtual void Load() = 0;
+
+		// Makes state hollow (removes entity coordiator)
+		virtual void Unload() = 0;
 
 		virtual void Pause() = 0;
 		virtual void Resume() = 0;
@@ -32,10 +42,10 @@ namespace vtx {
 		virtual void Draw() = 0;
 
 		void ChangeState(const std::string& id);
-		// Entity Manager
 
 	protected:
 		Application* app;
+		EntityCoordinator entityCoordinator;
 
 	};
 }

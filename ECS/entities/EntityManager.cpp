@@ -5,6 +5,14 @@
 namespace vtx
 {
 
+	void checkRange(Entity entity, uint32_t size, const std::string& funct)
+	{
+		if (entity > size) {
+			std::cout << "Entity id [" << entity << "] out of range. See " + funct + " (EntityManager.cpp)" << std::endl;
+			throw;
+		}
+	}
+
 	EntityManager::EntityManager()
 		: livingEntityCount(0)
 	{
@@ -52,14 +60,6 @@ namespace vtx
 		checkRange(entity, MAX_ENTITIES, "vtx::EntityManager::GetSignature(Entity entity)");
 
 		return signatures[entity];
-	}
-
-	void checkRange(Entity entity, uint32_t size, const std::string& funct)
-	{
-		if (entity > size) {
-			std::cout << "Entity id [" << entity << "] out of range. See " + funct + " (EntityManager.cpp)" << std::endl;
-			throw;
-		}
 	}
 
 }

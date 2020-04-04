@@ -150,28 +150,34 @@
   <ItemGroup>
     <ClCompile Include="assets\AssetHolder.cpp" />
     <ClCompile Include="assets\AssetManager.cpp" />
-    <ClCompile Include="components\ComponentManager.cpp" />
+    <ClCompile Include="ECS\components\ComponentManager.cpp" />
     <ClCompile Include="core\Application.cpp" />
-    <ClCompile Include="entities\Entity.cpp" />
-    <ClCompile Include="entities\EntityManager.cpp" />
+    <ClCompile Include="ECS\EntityCoordinator.cpp" />
+    <ClCompile Include="ECS\entities\Entity.cpp" />
+    <ClCompile Include="ECS\entities\EntityManager.cpp" />
+    <ClCompile Include="ECS\systems\RenderSystem.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
     <ClCompile Include="states\States.cpp" />
+    <ClCompile Include="ECS\systems\SystemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assets\AssetHolder.h" />
     <ClInclude Include="assets\AssetManager.h" />
-    <ClInclude Include="components\ComponentManager.h" />
-    <ClInclude Include="components\Component.h" />
-    <ClInclude Include="components\Components.h" />
+    <ClInclude Include="ECS\components\ComponentManager.h" />
+    <ClInclude Include="ECS\components\Components.h" />
     <ClInclude Include="core\Application.h" />
-    <ClInclude Include="entities\Entity.h" />
-    <ClInclude Include="entities\EntityManager.h" />
+    <ClInclude Include="ECS\EntityCoordinator.h" />
+    <ClInclude Include="ECS\entities\Entity.h" />
+    <ClInclude Include="ECS\entities\EntityManager.h" />
+    <ClInclude Include="ECS\systems\RenderSystem.h" />
+    <ClInclude Include="ECS\systems\Systems.h" />
     <ClInclude Include="Sandbox\Entities\Player.h" />
     <ClInclude Include="Sandbox\Game.h" />
     <ClInclude Include="Sandbox\States\GameState.h" />
     <ClInclude Include="states\States.h" />
     <ClInclude Include="states\State.h" />
+    <ClInclude Include="ECS\systems\SystemManager.h" />
     <ClInclude Include="util\Math.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

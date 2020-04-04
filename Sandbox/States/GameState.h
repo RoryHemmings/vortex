@@ -6,29 +6,47 @@
 #include <iostream>
 #include <memory>
 
-#include "../Entities/Player.h"
-
-#include "../../entities/EntityManager.h"
 #include "../../states/State.h"
 
-class GameState : public vtx::State, public vtx::EntityManager
+#include "../../util/Math.h"
+
+class GameState : public vtx::State
 {
 
 public:
 	GameState(vtx::Application* app)
 		: State(app)
-		, EntityManager(app)
+	{ }
+
+	/*
+		User defines systemsa nd which entities/components are utilized
+	*/
+	void Load()
 	{
-		Player player(app, 100, 100);
-		AddEntity(player, "player");
+		entityCoordinator.Init();
 
-		
+		entityCoordinator.RegisterComponent<vtx::components::Transfrom>();
+		entityCoordinator.RegisterComponent<vtx::components::Renderer>();
 
+		entityCoordinator.RegisterSystem<vtx::systems::RenderSystem>();
+
+		vtx::Signature signature;
+		signature.set(entityCoordinator.GetComponentType<vtx::components::Transfrom>());
+		signature.set(entityCoordinator.GetComponentType<vtx::components::Renderer>());
+		entityCoordinator.SetSystemSignature<vtx::systems::RenderSystem>(signature);
+
+		vtx::Entity player = entityCoordinator.CreateEntity();
+		entityCoordinator.AddComponent(
+			player,
+			vtx::components::Transfrom{ vtx::Vec2f(100, 100), 0.0, {1.0, 1.0} });
+		entityCoordinator.AddComponent(
+			player,
+			vtx::components::Renderer{ app->GetAssetHolder().textures.Get("john") });
 	}
 
-	void Cleanup()
+	void Unload()
 	{
-
+		entityCoordinator.Clear();
 	}
 
 	void Pause()
@@ -43,17 +61,17 @@ public:
 
 	void FixedUpdate()
 	{
-		vtx::EntityManager::FixedUpdate();
+		
 	}
 
 	void VariableUpdate(float delta)
 	{
-		vtx::EntityManager::VariableUpdate(delta);
+		
 	}
 
 	void Draw()
 	{
-		vtx::EntityManager::Draw();
+		entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->Draw(app, &entityCoordinator);
 	}
 
 private:
