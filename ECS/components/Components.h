@@ -24,6 +24,18 @@ namespace vtx
 			Vec2f scale = { 1.0f, 1.0f };
 		};
 
+		struct Physics
+		{
+			// Pixels per second
+			Vec2f velocity = { 0.0f, 0.0f };
+			float gravity = 35.0f;
+		};
+
+		struct Collider
+		{
+			
+		};
+
 		struct Renderer
 		{
 			sf::Texture texture;

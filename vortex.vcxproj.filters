@@ -51,6 +51,9 @@
     <ClCompile Include="ECS\systems\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ECS\systems\PhysicsSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Application.h">
@@ -104,5 +107,23 @@
     <ClInclude Include="ECS\systems\Systems.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\systems\PhysicsSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Sandbox\Assets\textures\Abe.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sandbox\Assets\textures\John.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sandbox\Assets\textures\null.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Sandbox\Assets\fonts\arial.ttf" />
+    <Font Include="Consolas.ttf" />
   </ItemGroup>
 </Project>

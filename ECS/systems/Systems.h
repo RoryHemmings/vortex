@@ -4,5 +4,6 @@
 #define VTX_SYSTEMS_H
 
 #include "RenderSystem.h"
+#include "PhysicsSystem.h"
 
 #endif

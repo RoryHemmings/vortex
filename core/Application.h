@@ -39,6 +39,8 @@ namespace vtx
 
 		bool IsRunning() const { return running; }
 
+		float GetFixedDelta() const { return fixedUpdateRate; }
+
 	protected:
 		virtual void init() = 0;
 		virtual void cleanup() = 0;

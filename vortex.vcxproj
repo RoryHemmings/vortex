@@ -87,12 +87,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Program Files\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Program Files\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -155,6 +155,7 @@
     <ClCompile Include="ECS\EntityCoordinator.cpp" />
     <ClCompile Include="ECS\entities\Entity.cpp" />
     <ClCompile Include="ECS\entities\EntityManager.cpp" />
+    <ClCompile Include="ECS\systems\PhysicsSystem.cpp" />
     <ClCompile Include="ECS\systems\RenderSystem.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="ECS\EntityCoordinator.h" />
     <ClInclude Include="ECS\entities\Entity.h" />
     <ClInclude Include="ECS\entities\EntityManager.h" />
+    <ClInclude Include="ECS\systems\PhysicsSystem.h" />
     <ClInclude Include="ECS\systems\RenderSystem.h" />
     <ClInclude Include="ECS\systems\Systems.h" />
     <ClInclude Include="Sandbox\Entities\Player.h" />
@@ -179,6 +181,15 @@
     <ClInclude Include="states\State.h" />
     <ClInclude Include="ECS\systems\SystemManager.h" />
     <ClInclude Include="util\Math.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Sandbox\Assets\textures\Abe.png" />
+    <Image Include="Sandbox\Assets\textures\John.png" />
+    <Image Include="Sandbox\Assets\textures\null.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Consolas.ttf" />
+    <Font Include="Sandbox\Assets\fonts\arial.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
