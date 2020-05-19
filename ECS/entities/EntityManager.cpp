@@ -33,7 +33,6 @@ namespace vtx
 		Entity id = availableEntities.front();
 		availableEntities.pop();
 		++livingEntityCount;
-
 		return id;
 	}
 

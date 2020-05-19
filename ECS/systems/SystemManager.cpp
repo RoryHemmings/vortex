@@ -23,10 +23,23 @@ namespace vtx
 			// Not exclusively the same, but if it contains them 
 			if ((entitySignature & systemSignature) == systemSignature) {
 				// Entity has added component that makes it elibible for this system
+
+				/* if system doesn't already contain this entity
+				   then call the init function for it */
+				if (system->entities.count(entity) < 1)
+					system->OnMemberAddition(entity);
+
+				// Automatically checks for duplicates
 				system->entities.insert(entity);
 			}
 			else {
 				// Entity has removed component that makes it invalid for this system
+
+				/* if system already contains this entity
+				   then call the destroy function for it */
+				if (system->entities.count(entity) > 0)
+					system->OnMemberDestruction(entity);
+
 				system->entities.erase(entity);
 			}
 		}

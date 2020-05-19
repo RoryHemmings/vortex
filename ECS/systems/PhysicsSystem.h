@@ -3,12 +3,24 @@
 #ifndef VTX_PHYSICS_SYSTEM_H
 #define VTX_PHYSICS_SYSTEM_H
 
+#include <box2d/box2d.h>
+
+#include <iostream>
+#include <memory>
+
 #include "SystemManager.h"
 
 namespace vtx
 {
     class Application;
     class EntityCoordinator;
+
+    class CollisionHandler : public b2ContactListener
+    {
+    public:
+        void BeginContact(b2Contact* contact);
+        void EndContact(b2Contact* contact);
+    };
 
     namespace systems
     {
@@ -17,7 +29,16 @@ namespace vtx
         {
 
         public:
-            void FixedUpdate(Application* app, EntityCoordinator* entityCoordinator);
+            PhysicsSystem(Application* app, EntityCoordinator* ec, float gravity, int velocityIterations = 8, int positionIterations = 3);
+
+            void OnMemberAddition(Entity entity);
+            void FixedUpdate();
+
+        private:
+            b2World world;
+            int velocityIterations, positionIterations;
+
+            std::shared_ptr<CollisionHandler> collisionHandler;  // Smart Pointer because it uses virtual inheritance
 
         };
 

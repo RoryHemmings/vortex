@@ -20,6 +20,7 @@ namespace vtx
 		AssetHolder(const std::string& parentFolder);
 
 		AssetManager<sf::Texture> textures;
+		AssetManager<sf::Font> fonts;
 
 	};
 

@@ -27,6 +27,13 @@ namespace vtx {
 
 			Register all components, all systems, 
 			all entities, all everything here
+
+			User defines systems and which entities/components are utilized
+
+			User must define ECS objects in this order
+				1. Components
+				2. Systems
+				3. Entites
 		*/
 		virtual void Load() = 0;
 

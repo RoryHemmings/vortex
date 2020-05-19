@@ -8,6 +8,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <cstdarg>
 
 #include "../entities/EntityManager.h"
 
@@ -20,11 +21,21 @@ namespace vtx
 	{
 
 	public:
-		virtual void FixedUpdate(Application* app, EntityCoordinator* entityCoordinator) { }
-		virtual void VariableUpdate(Application* app, EntityCoordinator* entityCoordinator, float delta) { }
-		virtual void Draw(Application* app, EntityCoordinator* entityCoordinator) { }
+		System(Application* a, EntityCoordinator* ec) { app = a; entityCoordinator = ec; }
+
+		// Initializes new Entity upon addition to system
+		virtual void OnMemberAddition(Entity member) { };
+		virtual void OnMemberDestruction(Entity member) { };
+
+		virtual void FixedUpdate() { }
+		virtual void VariableUpdate(float delta) { }
+		virtual void Draw() { }
 
 		std::set<Entity> entities;
+
+	protected:
+		Application* app;
+		EntityCoordinator* entityCoordinator;
 
 	};
 
@@ -32,8 +43,8 @@ namespace vtx
 	{
 
 	public:
-		template <class T>
-		std::shared_ptr<T> RegisterSystem()
+		template <class T, class... Args>
+		std::shared_ptr<T> RegisterSystem(Application* app, EntityCoordinator* ec, Args... args)
 		{
 			std::string typeName = typeid(T).name();
 
@@ -42,7 +53,8 @@ namespace vtx
 				return std::static_pointer_cast<T>(systems[typeName]);
 			}
 
-			auto system = std::make_shared<T>();
+			auto system = std::make_shared<T>(app, ec, args...);
+
 			systems.insert({ typeName, system });
 
 			return system;

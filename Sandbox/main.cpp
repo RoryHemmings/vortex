@@ -4,7 +4,7 @@
 
 int main()
 {
-    Game game("Vortex", 900, 600, 30, "Sandbox/Assets");
+    Game game("Vortex", 900, 600, 120, "Sandbox/Assets");
     int exitCode = game.Run();
 
     return exitCode;

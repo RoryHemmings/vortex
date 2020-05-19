@@ -66,10 +66,10 @@ namespace vtx
 			return componentManager->GetComponentType<T>();
 		}
 
-		template <class T>
-		std::shared_ptr<T> RegisterSystem()
+		template <class T, class... Args>
+		std::shared_ptr<T> RegisterSystem(Application* app, Args... args)
 		{
-			return systemManager->RegisterSystem<T>();
+			return systemManager->RegisterSystem<T>(app, this, args...);
 		}
 
 		template <class T>

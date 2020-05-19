@@ -4,81 +4,69 @@
 #define VTX_COMPONENTS_H
 
 #include <string>
+#include <unordered_map>
 
 #include <SFML/Graphics.hpp>
+#include <box2d/box2d.h>
 
 #include "../../util/Math.h"
 
 namespace vtx
 {
 	typedef uint8_t ComponentType;
-	const uint8_t MAX_COMPONENTS = 64;
+	const uint8_t MAX_COMPONENTS = 255;
 
 	namespace components
 	{
 
 		struct Transfrom
 		{
+			// In METERS
 			Vec2f position = { 0.0f, 0.0f };
-			float rotation = 0.0;
 			Vec2f scale = { 1.0f, 1.0f };
+
+			// In radians
+			float rotation = 0.0f;
 		};
 
 		struct Physics
 		{
-			// Pixels per second
-			Vec2f velocity = { 0.0f, 0.0f };
-			float gravity = 35.0f;
-		};
+			/* 
+				Memory is managed by box2d,
+				no need for smart pointer
+			*/
+			b2Body* body;
+			b2Fixture* bottom;
 
-		struct Collider
-		{
-			
+			b2BodyType type = b2_dynamicBody;
+
+			float density = 0.0f;
+			float friction = 0.0f;
+
+			bool topTouching = false;
+			bool bottomTouching = false;
+			bool leftTouching = false;
+			bool rightTouching = false;
 		};
 
 		struct Renderer
 		{
-			sf::Texture texture;
+			// Animation name to vector of frame pointers
+			std::unordered_map<std::string, std::vector<sf::Texture*>> animations;
 			sf::VertexArray quad = sf::VertexArray(sf::Quads, 4);
+
+			float millisecondsPerFrame = -1.0f;
+			int frameIndex = 0;
+			int millisecondsSinceLastFrame = 0;
+
+			std::string currentAnimation;
+		
+			void AddAnimation(const std::string& name, const std::vector<sf::Texture*>& frames);
+			void SetAnimation(const std::string& name, float fps=0.0f);
+
+			bool flipX = false;
+			bool flipY = false;
 		};
-
-		//class TransformComponent : public Component
-		//{
-
-		//public:
-		//	TransformComponent(double x, double y, double scaleX=1.0, double scaleY=1.0, double xRot=0.0, double yRot=0.0)
-		//		: x(x)
-		//		, y(y)
-		//		, scaleX(scaleX)
-		//		, scaleY(scaleY)
-		//		, xRot(xRot)
-		//		, yRot(yRot)
-		//	{}
-
-		//	void FixedUpdate(Application* app) { }
-		//	void VariableUpdate(Application* app, float delta) { }
-		//	void Draw(Application* app) { }
-
-		//	// need scale as well
-
-		//	double GetX() const { return x; }
-		//	double GetY() const { return y; }
-		//	double GetScaleX() const { return scaleX; }
-		//	double GetScaleY() const { return scaleY; }
-		//	double GetXRotation() const { return xRot; }
-		//	double GetYRotation() const { return yRot; }
-
-		//	void SetX(double x) { this->x = x; }
-		//	void SetY(double y) { this->y = y; }
-		//	void SetScaleX(double scaleX) { this->scaleX; }
-		//	void SetScaleY(double scaleY) { this->scaleY; }
-		//	void SetXRotation(double xRot) { this->xRot = xRot; }
-		//	void SetYRotation(double yRot) { this->yRot = yRot; }
-
-		//protected:
-		//	double x, y, xRot, yRot, scaleX, scaleY;
-
-		//};
 
 	}
 

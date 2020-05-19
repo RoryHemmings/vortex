@@ -11,6 +11,8 @@
 #include "../states/State.h"
 #include "../states/States.h"
 
+#include "../io/InputManager.h"
+
 namespace vtx
 {
 
@@ -39,6 +41,7 @@ namespace vtx
 
 		bool IsRunning() const { return running; }
 
+		// Time between ticks
 		float GetFixedDelta() const { return fixedUpdateRate; }
 
 	protected:
