@@ -47,7 +47,7 @@ public:
 		entityCoordinator.RegisterComponent<vtx::components::Physics>();
 
 		entityCoordinator.RegisterSystem<vtx::systems::RenderSystem>(app, 60);	// 60 is pixel to meter ratio
-		entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 25); // 9.8 is gravity in meters per second
+		entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 30); // 30 is gravity in meters per second
 
 		vtx::Signature rsSignature;
 		std::cout << entityCoordinator.GetComponentType<vtx::components::Transfrom>() << std::endl;
@@ -64,6 +64,7 @@ public:
 
 		initPlayer();
 		initFloor();
+		CreateStaticRectangle(5, 7, 500, 250);
 	}
 
 	void Unload()
@@ -86,7 +87,7 @@ public:
 
 		entityCoordinator.GetSystem<vtx::systems::PhysicsSystem>()->FixedUpdate();
 		controlPlayer();
-
+		
 		entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->FixedUpdate();
 
 		fpsMeter.setString("fps: " + std::to_string(1.0f / delta));
@@ -132,9 +133,9 @@ private:
 		}
 		if (vtx::InputManager::KeyIsPressed(vtx_key::A)) {
 			moveX = -speed;
-			renderer.SetAnimation("walking", 10.0f);
+			renderer.SetAnimation("walking", 10.0f, true);
 		}
-		if (moveX == 0) renderer.SetAnimation("static");
+		if (moveX == 0) renderer.SetAnimation("static", 0.0f, renderer.flipX);
 
 		if (vtx::InputManager::KeyIsPressed(vtx_key::Space) && physics.bottomTouching)
 			body->ApplyLinearImpulseToCenter({0, body->GetMass() * -5.0f}, true);
@@ -152,7 +153,7 @@ private:
 		transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(playerTexture1.getSize().y);
 
 		vtx::components::Physics physics;
-		physics.friction = 0.3f;
+		physics.friction = 0.001f;
 		physics.density = 1.0f;
 
 		vtx::components::Renderer renderer;
@@ -176,6 +177,28 @@ private:
 
 		vtx::components::Physics physics;
 		physics.friction = 0.3f;
+		physics.type = b2_staticBody;
+
+		vtx::components::Renderer renderer;
+		renderer.AddAnimation("static", { &empty });
+		renderer.SetAnimation("static");
+
+		entityCoordinator.AddComponent(box, transform);
+		entityCoordinator.AddComponent(box, renderer);
+		entityCoordinator.AddComponent(box, physics);
+	}
+
+	void CreateStaticRectangle(float x, float y, float width, float height, float friction=0.3f)
+	{
+		vtx::Entity box = entityCoordinator.CreateEntity();
+
+		vtx::components::Transfrom transform;
+		transform.position = vtx::Vec2f(x, y);
+		transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(width);
+		transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(height);
+
+		vtx::components::Physics physics;
+		physics.friction = friction;
 		physics.type = b2_staticBody;
 
 		vtx::components::Renderer renderer;

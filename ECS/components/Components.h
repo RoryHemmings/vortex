@@ -62,7 +62,7 @@ namespace vtx
 			std::string currentAnimation;
 		
 			void AddAnimation(const std::string& name, const std::vector<sf::Texture*>& frames);
-			void SetAnimation(const std::string& name, float fps=0.0f);
+			void SetAnimation(const std::string& name, float fps=0.0f, bool flipX = false, bool flipY = false);
 
 			bool flipX = false;
 			bool flipY = false;

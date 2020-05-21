@@ -57,6 +57,7 @@ namespace vtx
 			b2BodyDef bd;
 			bd.position.Set(x, y);
 			bd.type = physics.type;
+			bd.fixedRotation = true;
 			bd.userData = &physics;
 			physics.body = world.CreateBody(&bd);
 
@@ -69,7 +70,7 @@ namespace vtx
 			//b2PolygonShape rightBox;
 
 			//topBox.SetAsBox(hx, 0.1f, {hx, 0}, 0.0f);
-			bottomBox.SetAsBox(hx, 0.1f, {hx, height}, 0.0f);
+			bottomBox.SetAsBox(hx - (0.1 * hx), 0.1f, {hx, height}, 0.0f);
 			//leftBox.SetAsBox(0.1f, hy, {0, hy}, 0.0f);
 			//rightBox.SetAsBox(0.1f, hy, {width, hy}, 0.0f);
 

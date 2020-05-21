@@ -4,8 +4,11 @@ namespace vtx
 {
 	namespace components 
 	{
-		void Renderer::SetAnimation(const std::string& name, float fps)
+		void Renderer::SetAnimation(const std::string& name, float fps, bool fx, bool fy)
 		{
+			flipX = fx;
+			flipY = fy;
+
 			if (name == currentAnimation) return;
 			if (animations.count(name) < 1)
 				throw "Animation: [" + name + "] is invalid";

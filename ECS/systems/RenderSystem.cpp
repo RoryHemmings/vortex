@@ -63,10 +63,19 @@ namespace vtx
 				renderer.quad[2].position = sf::Vector2f(x + width, y + height);
 				renderer.quad[3].position = sf::Vector2f(x, y + height);
 
-				renderer.quad[0].texCoords = sf::Vector2f(0, 0);
-				renderer.quad[1].texCoords = sf::Vector2f(width, 0);
-				renderer.quad[2].texCoords = sf::Vector2f(width, height);
-				renderer.quad[3].texCoords = sf::Vector2f(0, height);
+				if (!renderer.flipX) {
+					renderer.quad[0].texCoords = sf::Vector2f(0, 0);
+					renderer.quad[1].texCoords = sf::Vector2f(width, 0);
+					renderer.quad[2].texCoords = sf::Vector2f(width, height);
+					renderer.quad[3].texCoords = sf::Vector2f(0, height);
+				}
+				else
+				{
+					renderer.quad[1].texCoords = sf::Vector2f(0, 0);
+					renderer.quad[0].texCoords = sf::Vector2f(width, 0);
+					renderer.quad[3].texCoords = sf::Vector2f(width, height);
+					renderer.quad[2].texCoords = sf::Vector2f(0, height);
+				}
 
 				app->GetRenderWindow().draw(renderer.quad, &texture);
 			}
