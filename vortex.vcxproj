@@ -162,6 +162,8 @@
     <ClCompile Include="ECS\systems\PhysicsSystem.cpp" />
     <ClCompile Include="ECS\systems\RenderSystem.cpp" />
     <ClCompile Include="io\InputManager.cpp" />
+    <ClCompile Include="Rise\main.cpp" />
+    <ClCompile Include="Rise\States\GameState.cpp" />
     <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
     <ClCompile Include="states\States.cpp" />
@@ -181,7 +183,8 @@
     <ClInclude Include="ECS\systems\RenderSystem.h" />
     <ClInclude Include="ECS\systems\Systems.h" />
     <ClInclude Include="io\InputManager.h" />
-    <ClInclude Include="Sandbox\Entities\Player.h" />
+    <ClInclude Include="Rise\Game.h" />
+    <ClInclude Include="Rise\States\GameState.h" />
     <ClInclude Include="Sandbox\Game.h" />
     <ClInclude Include="Sandbox\States\GameState.h" />
     <ClInclude Include="states\States.h" />
@@ -190,6 +193,12 @@
     <ClInclude Include="util\Math.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Rise\Assets\textures\Abe.png" />
+    <Image Include="Rise\Assets\textures\beam.png" />
+    <Image Include="Rise\Assets\textures\John.png" />
+    <Image Include="Rise\Assets\textures\John1.png" />
+    <Image Include="Rise\Assets\textures\John2.png" />
+    <Image Include="Rise\Assets\textures\null.png" />
     <Image Include="Sandbox\Assets\textures\Abe.png" />
     <Image Include="Sandbox\Assets\textures\John.png" />
     <Image Include="Sandbox\Assets\textures\null.png" />

@@ -2,13 +2,13 @@
 
 #include "Game.h"
 
-//int main()
-//{
-//    Game game("Vortex", 900, 600, 120, "Sandbox/Assets");
-//    int exitCode = game.Run();
-//
-//    return exitCode;
-//}
+int main()
+{
+    Game game("Rise", 900, 600, 120, "Rise/Assets");
+    int exitcode = game.Run();
+
+    return exitcode;
+}
 
 // Questions
 // 1. should i pass a window to the draw functions?

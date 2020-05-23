@@ -93,7 +93,6 @@ namespace vtx
 			physics.body->CreateFixture(&fd);
 			//physics.body->CreateFixture(&top);
 			physics.bottom = physics.body->CreateFixture(&bottomDef);
-			std::cout << physics.bottom << std::endl;
 			//physics.body->CreateFixture(&left);
 			//physics.body->CreateFixture(&right);
 		}

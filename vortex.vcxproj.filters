@@ -63,6 +63,12 @@
     <ClCompile Include="ECS\components\Components.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rise\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rise\States\GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Application.h">
@@ -81,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="assets\AssetHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sandbox\Entities\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="states\States.h">
@@ -125,6 +128,12 @@
     <ClInclude Include="io\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rise\States\GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rise\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sandbox\Assets\textures\Abe.png">
@@ -134,6 +143,24 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Sandbox\Assets\textures\null.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\Abe.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\beam.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\John.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\John1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\John2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rise\Assets\textures\null.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

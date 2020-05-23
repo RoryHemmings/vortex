@@ -47,10 +47,10 @@ public:
 		entityCoordinator.RegisterComponent<vtx::components::Physics>();
 
 		entityCoordinator.RegisterSystem<vtx::systems::RenderSystem>(app, 60);	// 60 is pixel to meter ratio
-		entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 30); // 30 is gravity in meters per second
+		entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 60); // 30 is gravity in meters per second
 
 		vtx::Signature rsSignature;
-		std::cout << entityCoordinator.GetComponentType<vtx::components::Transfrom>() << std::endl;
+		
 		rsSignature.set(entityCoordinator.GetComponentType<vtx::components::Transfrom>());
 		rsSignature.set(entityCoordinator.GetComponentType<vtx::components::Renderer>());
 		entityCoordinator.SetSystemSignature<vtx::systems::RenderSystem>(rsSignature);
@@ -61,10 +61,10 @@ public:
 		entityCoordinator.SetSystemSignature<vtx::systems::PhysicsSystem>(psSignature);
 
 		initAssets();
-
 		initPlayer();
-		initFloor();
-		CreateStaticRectangle(5, 7, 500, 250);
+
+		CreateStaticRectangle(0, 9.8, app->GetWidth(), 50);
+		CreateBeam(5, 7);
 	}
 
 	void Unload()
@@ -73,14 +73,10 @@ public:
 	}
 
 	void Pause()
-	{
-
-	}
+	{ }
 
 	void Resume()
-	{
-
-	}
+	{ }
 
 	void FixedUpdate()
 	{
@@ -114,6 +110,7 @@ private:
 	{
 		playerTexture1 = app->GetAssetHolder().textures.Get("John1");
 		playerTexture2 = app->GetAssetHolder().textures.Get("John2");
+		beam = app->GetAssetHolder().textures.Get("beam");
 
 		empty = app->GetAssetHolder().textures.Get("null");
 	}
@@ -125,7 +122,7 @@ private:
 		auto& renderer = entityCoordinator.GetComponent <vtx::components::Renderer>(player);
 
 		float moveX = 0.0f;
-		float speed = 5.0f;
+		float speed = 10.0f;
 
 		if (vtx::InputManager::KeyIsPressed(vtx_key::D)) {
 			moveX = speed;
@@ -138,7 +135,7 @@ private:
 		if (moveX == 0) renderer.SetAnimation("static", 0.0f, renderer.flipX);
 
 		if (vtx::InputManager::KeyIsPressed(vtx_key::Space) && physics.bottomTouching)
-			body->ApplyLinearImpulseToCenter({0, body->GetMass() * -5.0f}, true);
+			body->ApplyLinearImpulseToCenter({0, body->GetMass() * -7.0f}, true);
 
 		body->SetLinearVelocity({ moveX, body->GetLinearVelocity().y });
 	}
@@ -166,21 +163,21 @@ private:
 		entityCoordinator.AddComponent(player, physics);
 	}
 
-	void initFloor()
+	void CreateBeam(float x, float y, float friction = 0.3f)
 	{
 		vtx::Entity box = entityCoordinator.CreateEntity();
 
 		vtx::components::Transfrom transform;
-		transform.position = vtx::Vec2f(0, 9.8);
-		transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(app->GetWidth());
-		transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(empty.getSize().y);
+		transform.position = vtx::Vec2f(x, y);
+		transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(beam.getSize().x);
+		transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(beam.getSize().y);
 
 		vtx::components::Physics physics;
-		physics.friction = 0.3f;
+		physics.friction = friction;
 		physics.type = b2_staticBody;
 
 		vtx::components::Renderer renderer;
-		renderer.AddAnimation("static", { &empty });
+		renderer.AddAnimation("static", { &beam });
 		renderer.SetAnimation("static");
 
 		entityCoordinator.AddComponent(box, transform);
@@ -219,6 +216,7 @@ private:
 	vtx::Entity player;
 	sf::Texture playerTexture1;
 	sf::Texture playerTexture2;
+	sf::Texture beam;
 	sf::Texture empty;
 
 };
