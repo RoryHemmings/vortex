@@ -1,7 +1,10 @@
 #include "GameState.h"
 
+#include "../../util/Math.h"
+#include "../../States/States.h"
+
 GameState::GameState(vtx::Application* app)
-	: State(app), delta(0)
+	: State(app), delta(0), blockNum(0)
 {
 	font.loadFromFile("Consolas.ttf");
 
@@ -22,8 +25,8 @@ void GameState::Load()
 	entityCoordinator.RegisterComponent<vtx::components::Renderer>();
 	entityCoordinator.RegisterComponent<vtx::components::Physics>();
 
-	entityCoordinator.RegisterSystem<vtx::systems::RenderSystem>(app, 60);	// 60 is pixel to meter ratio
-	entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 60); // 30 is gravity in meters per second
+	renderSystem = entityCoordinator.RegisterSystem<vtx::systems::RenderSystem>(app, 60);	// 60 is pixel to meter ratio
+	physicsSystem = entityCoordinator.RegisterSystem<vtx::systems::PhysicsSystem>(app, 60); // 60 is gravity in meters per second^2
 
 	vtx::Signature rsSignature;
 
@@ -39,7 +42,15 @@ void GameState::Load()
 	initAssets();
 	initPlayer();
 	initObstacles();
-	initFloor();
+}
+
+void GameState::Unload()
+{
+	for (int i = 0; i < blocks.size(); ++i) {
+		blocks[i].ClearEntities();
+	}
+
+	entityCoordinator.Clear();
 }
 
 void GameState::FixedUpdate()
@@ -47,19 +58,19 @@ void GameState::FixedUpdate()
 	entityCoordinator.GetSystem<vtx::systems::PhysicsSystem>()->FixedUpdate();
 
 	controlPlayer();
-	controlObstacles();
+	if (!controlObstacles()) return;
 
-	entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->FixedUpdate();
+	renderSystem->FixedUpdate();
 
 	fpsMeter.setString("fps: " + std::to_string(1.0f / delta));
-	drawnEntities.setString("neos: " + std::to_string(entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->GetNumEntitiesRendered()));
+	drawnEntities.setString("Entities: " + std::to_string(renderSystem->GetNumEntitiesRendered()));
 }
 
 void GameState::Draw()
 {
-	entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->Draw();
-	//std::cout << entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->entities.size() << std::endl;
-	//std::cout << entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->GetNumEntitiesRendered() << std::endl;
+	renderSystem->Draw();
+	//std::cout << renderSystem->entities.size() << std::endl;
+	//std::cout << renderSystem->GetNumEntitiesRendered() << std::endl;
 
 	app->GetRenderWindow().draw(fpsMeter);
 	app->GetRenderWindow().draw(drawnEntities);
@@ -69,7 +80,17 @@ void GameState::initAssets()
 {
 	playerTexture1 = app->GetAssetHolder().textures.Get("John1");
 	playerTexture2 = app->GetAssetHolder().textures.Get("John2");
-	beam = app->GetAssetHolder().textures.Get("beam");
+	short_beam = app->GetAssetHolder().textures.Get("beam");
+	long_beam = app->GetAssetHolder().textures.Get("beam2");
+
+	/*for (int i = 0; i < 5; ++i) {
+		buildings[i] = app->GetAssetHolder().textures.Get("building" + i);
+	}*/
+	buildings[0] = app->GetAssetHolder().textures.Get("building1");
+	buildings[1] = app->GetAssetHolder().textures.Get("building2");
+	buildings[2] = app->GetAssetHolder().textures.Get("building3");
+	buildings[3] = app->GetAssetHolder().textures.Get("building4");
+	buildings[4] = app->GetAssetHolder().textures.Get("building5");
 
 	empty = app->GetAssetHolder().textures.Get("null");
 }
@@ -79,12 +100,12 @@ void GameState::initPlayer()
 	player = entityCoordinator.CreateEntity();
 
 	vtx::components::Transfrom transform;
-	transform.position = vtx::Vec2f(10, 0);
-	transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(playerTexture1.getSize().x);
-	transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(playerTexture1.getSize().y);
+	transform.position = vtx::Vec2f(1.0f, -16.0f);
+	transform.scale.x = renderSystem->PixelsToMeters(playerTexture1.getSize().x);
+	transform.scale.y = renderSystem->PixelsToMeters(playerTexture1.getSize().y);
 
 	vtx::components::Physics physics;
-	physics.friction = 0.001f;
+	physics.friction = 0.0f;
 	physics.density = 1.0f;
 
 	vtx::components::Renderer renderer;
@@ -97,87 +118,88 @@ void GameState::initPlayer()
 	entityCoordinator.AddComponent(player, physics);
 }
 
-void GameState::initObstacles()
-{
-	for (int i = 0; i < 5; ++i) {
-		obstacles.push_back(createBeam(i + 3, i + 3));
-	}
+// x is in meters
+Block GameState::createBlock(float x)
+{ 
+	return Block(&entityCoordinator, x, app->GetWidth(), blockCombos[int(floor(vtx::GenRandomFloat(0, blockCombos.size())))], &empty);
 }
 
-void GameState::initFloor()
+void GameState::initObstacles()
 {
-	vtx::Entity box = entityCoordinator.CreateEntity();
+	SetBlockCombos();
 
-	vtx::components::Transfrom transform;
-	transform.position = vtx::Vec2f(0, entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(app->GetHeight() - 10));
-	transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(app->GetWidth());
-	transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(50);
-
-	vtx::components::Physics physics;
-	physics.friction = 0.3f;
-	physics.type = b2_staticBody;
-
-	vtx::components::Renderer renderer;
-	renderer.AddAnimation("static", { &empty });
-	renderer.SetAnimation("static");
-
-	entityCoordinator.AddComponent(box, transform);
-	entityCoordinator.AddComponent(box, renderer);
-	entityCoordinator.AddComponent(box, physics);
+	blocks.push_back(createBlock(0.0f));
+	blocks.push_back(createBlock(renderSystem->PixelsToMeters(app->GetWidth())));
 }
 
 void GameState::controlPlayer()
 {
 	auto& physics = entityCoordinator.GetComponent<vtx::components::Physics>(player);
 	auto& body = entityCoordinator.GetComponent<vtx::components::Physics>(player).body;
-	auto& renderer = entityCoordinator.GetComponent <vtx::components::Renderer>(player);
+	auto& renderer = entityCoordinator.GetComponent<vtx::components::Renderer>(player);
 
 	float moveX = 0.0f;
-	float speed = 10.0f;
+	float speed = 20.0f + (blockNum);
 
 	if (vtx::InputManager::KeyIsPressed(vtx_key::D)) {
-		moveX = speed;
+		body->SetLinearVelocity({ speed, body->GetLinearVelocity().y });
 		renderer.SetAnimation("walking", 10.0f);
 	}
-	if (vtx::InputManager::KeyIsPressed(vtx_key::A)) {
-		moveX = -speed;
+	else if (vtx::InputManager::KeyIsPressed(vtx_key::A)) {
+		body->SetLinearVelocity({ -speed, body->GetLinearVelocity().y });
 		renderer.SetAnimation("walking", 10.0f, true);
 	}
-	if (moveX == 0) renderer.SetAnimation("static", 0.0f, renderer.flipX);
+	else renderer.SetAnimation("static", 0.0f, renderer.flipX);
 
 	if (vtx::InputManager::KeyIsPressed(vtx_key::Space) && physics.bottomTouching)
-		body->ApplyLinearImpulseToCenter({ 0, body->GetMass() * -7.0f }, true);
+		body->ApplyLinearImpulseToCenter({ 0, body->GetMass() * -10.0f }, true);
 
-	body->SetLinearVelocity({ moveX, body->GetLinearVelocity().y });
+
+	renderSystem->SetXOffset(renderSystem->MetersToPixels(body->GetPosition().x) - (app->GetWidth() / 2) + (playerTexture1.getSize().x / 2) + 300);
+	renderSystem->SetYOffset(renderSystem->MetersToPixels(body->GetPosition().y) - (app->GetHeight() / 2) + (playerTexture1.getSize().y / 2) + 300);
 }
 
-void GameState::controlObstacles()
+void GameState::die()
 {
-	for (auto& e : obstacles) {
-		auto& physics = entityCoordinator.GetComponent<vtx::components::Physics>(e);
+	vtx::States::SetCurrentState("DeathState");
+}
+
+bool GameState::controlObstacles()
+{
+	if (renderSystem->GetYOffset() >= 910) {
+		die();
+		return false;
 	}
+
+	if (renderSystem->GetXOffset() >= (blockNum + 1) * app->GetWidth()) {
+		++blockNum;
+ 		blocks[0].ClearEntities();
+		blocks.erase(blocks.begin());
+		blocks.push_back(createBlock(renderSystem->PixelsToMeters((blockNum + 1) * app->GetWidth())));
+	}
+	return true;
 }
-
-vtx::Entity GameState::createBeam(float x, float y, float friction)
-{
-	vtx::Entity box = entityCoordinator.CreateEntity();
-
-	vtx::components::Transfrom transform;
-	transform.position = vtx::Vec2f(x, y);
-	transform.scale.x = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(beam.getSize().x);
-	transform.scale.y = entityCoordinator.GetSystem<vtx::systems::RenderSystem>()->PixelsToMeters(beam.getSize().y);
-
-	vtx::components::Physics physics;
-	physics.friction = friction;
-	physics.type = b2_staticBody;
-
-	vtx::components::Renderer renderer;
-	renderer.AddAnimation("static", { &beam });
-	renderer.SetAnimation("static");
-
-	entityCoordinator.AddComponent(box, transform);
-	entityCoordinator.AddComponent(box, renderer);
-	entityCoordinator.AddComponent(box, physics);
-
-	return box;
-}
+//
+//vtx::Entity GameState::createBeam(float x, float y, float friction)
+//{
+//	vtx::Entity box = entityCoordinator.CreateEntity();
+//
+//	vtx::components::Transfrom transform;
+//	transform.position = vtx::Vec2f(x, y);
+//	transform.scale.x = renderSystem->PixelsToMeters(beam.getSize().x);
+//	transform.scale.y = renderSystem->PixelsToMeters(beam.getSize().y);
+//
+//	vtx::components::Physics physics;
+//	physics.friction = friction;
+//	physics.type = b2_staticBody;
+//
+//	vtx::components::Renderer renderer;
+//	renderer.AddAnimation("static", { &beam });
+//	renderer.SetAnimation("static");
+//
+//	entityCoordinator.AddComponent(box, transform);
+//	entityCoordinator.AddComponent(box, renderer);
+//	entityCoordinator.AddComponent(box, physics);
+//
+//	return box;
+//}

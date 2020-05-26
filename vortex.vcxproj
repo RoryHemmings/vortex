@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="assets\AssetHolder.cpp" />
     <ClCompile Include="assets\AssetManager.cpp" />
+    <ClCompile Include="Rise\Scripts\Block.cpp" />
     <ClCompile Include="ECS\components\ComponentManager.cpp" />
     <ClCompile Include="core\Application.cpp" />
     <ClCompile Include="ECS\components\Components.cpp" />
@@ -163,15 +164,18 @@
     <ClCompile Include="ECS\systems\RenderSystem.cpp" />
     <ClCompile Include="io\InputManager.cpp" />
     <ClCompile Include="Rise\main.cpp" />
+    <ClCompile Include="Rise\States\BlockCombos.cpp" />
+    <ClCompile Include="Rise\States\DeathState.cpp" />
     <ClCompile Include="Rise\States\GameState.cpp" />
-    <ClCompile Include="Sandbox\main.cpp" />
     <ClCompile Include="states\State.cpp" />
     <ClCompile Include="states\States.cpp" />
     <ClCompile Include="ECS\systems\SystemManager.cpp" />
+    <ClCompile Include="util\Math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assets\AssetHolder.h" />
     <ClInclude Include="assets\AssetManager.h" />
+    <ClInclude Include="Rise\Scripts\Block.h" />
     <ClInclude Include="ECS\components\ComponentManager.h" />
     <ClInclude Include="ECS\components\Components.h" />
     <ClInclude Include="core\Application.h" />
@@ -184,9 +188,8 @@
     <ClInclude Include="ECS\systems\Systems.h" />
     <ClInclude Include="io\InputManager.h" />
     <ClInclude Include="Rise\Game.h" />
+    <ClInclude Include="Rise\States\DeathState.h" />
     <ClInclude Include="Rise\States\GameState.h" />
-    <ClInclude Include="Sandbox\Game.h" />
-    <ClInclude Include="Sandbox\States\GameState.h" />
     <ClInclude Include="states\States.h" />
     <ClInclude Include="states\State.h" />
     <ClInclude Include="ECS\systems\SystemManager.h" />
@@ -199,9 +202,6 @@
     <Image Include="Rise\Assets\textures\John1.png" />
     <Image Include="Rise\Assets\textures\John2.png" />
     <Image Include="Rise\Assets\textures\null.png" />
-    <Image Include="Sandbox\Assets\textures\Abe.png" />
-    <Image Include="Sandbox\Assets\textures\John.png" />
-    <Image Include="Sandbox\Assets\textures\null.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Consolas.ttf" />

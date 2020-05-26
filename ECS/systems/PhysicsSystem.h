@@ -32,6 +32,7 @@ namespace vtx
             PhysicsSystem(Application* app, EntityCoordinator* ec, float gravity, int velocityIterations = 8, int positionIterations = 3);
 
             void OnMemberAddition(Entity entity);
+            void OnMemberDestruction(Entity entity);
             void FixedUpdate();
 
         private:

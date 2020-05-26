@@ -25,9 +25,9 @@ namespace vtx
 
 	void EntityCoordinator::DestroyEntity(Entity entity)
 	{
-		entityManager->DestroyEntity(entity);
-		componentManager->EntityDestroyed(entity);
 		systemManager->EntityDestroyed(entity);
+		componentManager->EntityDestroyed(entity);
+		entityManager->DestroyEntity(entity);
 	}
 
 }

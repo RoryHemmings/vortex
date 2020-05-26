@@ -25,6 +25,11 @@ namespace vtx
 			a->bottomTouching = false;
 		if (b->bottom == contact->GetFixtureA() || b->bottom == contact->GetFixtureB())
 			b->bottomTouching = false;
+		
+		if (a->CollisionCallback != nullptr)
+			a->CollisionCallback(b);
+		if (b->CollisionCallback != nullptr)
+			b->CollisionCallback(a);
 	}
 
 	namespace systems
@@ -95,6 +100,12 @@ namespace vtx
 			physics.bottom = physics.body->CreateFixture(&bottomDef);
 			//physics.body->CreateFixture(&left);
 			//physics.body->CreateFixture(&right);
+		}
+
+		void PhysicsSystem::OnMemberDestruction(Entity entity)
+		{
+			auto& physics = entityCoordinator->GetComponent<vtx::components::Physics>(entity);
+			world.DestroyBody(physics.body);
 		}
 
 		void PhysicsSystem::FixedUpdate()

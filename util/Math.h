@@ -12,4 +12,6 @@ namespace vtx
 	typedef sf::Vector3<float> Vec3f;
 	typedef sf::Vector3<double> Vec3d;
 
+	float GenRandomFloat(float lowerBound, float upperBound);
+
 }

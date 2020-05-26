@@ -40,7 +40,6 @@ namespace vtx
 				std::cout << "Entity + [" << entity << "] already has component. See void vtx::ComponentManager<T>::InsertData(Entity entity, T component) (ComponentManager.h)" << std::endl;
 				return;
 			}
-
 			/*
 				Add component to end of array
 				Adjust maps so that the entity
@@ -50,7 +49,7 @@ namespace vtx
 			size_t end = size;
 			entityToIndexMap[entity] = end;
 			indexToEntityMap[end] = entity;
-			componentArray[entity] = component;
+			componentArray[end] = component;
 			++size;
 		}
 

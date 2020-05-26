@@ -1,11 +1,15 @@
 #pragma once
 
+#ifndef GAME_H
+#define GAME_H
+
 #include <string>
 
 #include "../core/Application.h"
 #include "../States/States.h"
 
 #include "States/GameState.h"
+#include "States/DeathState.h"
 
 class Game : public vtx::Application
 {
@@ -19,6 +23,8 @@ private:
 	void init()
 	{
 		vtx::States::AddState(new GameState(this), "GameState");
+		vtx::States::AddState(new DeathState(this), "DeathState");
+
 		vtx::States::SetCurrentState("GameState");
 
 		initWindow();
@@ -32,3 +38,4 @@ private:
 
 };
 
+#endif

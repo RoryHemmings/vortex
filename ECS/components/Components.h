@@ -47,6 +47,8 @@ namespace vtx
 			bool bottomTouching = false;
 			bool leftTouching = false;
 			bool rightTouching = false;
+
+			void (*CollisionCallback)(Physics*) = nullptr;
 		};
 
 		struct Renderer

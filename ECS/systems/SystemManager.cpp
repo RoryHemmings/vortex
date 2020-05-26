@@ -7,6 +7,7 @@ namespace vtx
 		for (const auto& pair : systems) {
 			const auto& system = pair.second;
 
+			system->OnMemberDestruction(entity);
 			system->entities.erase(entity);
 		}
 	}

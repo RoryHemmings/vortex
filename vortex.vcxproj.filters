@@ -24,9 +24,6 @@
     <ClCompile Include="states\State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sandbox\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="assets\AssetHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,6 +66,18 @@
     <ClCompile Include="Rise\States\GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rise\Scripts\Block.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rise\States\BlockCombos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rise\States\DeathState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\Application.h">
@@ -78,12 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="states\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sandbox\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sandbox\States\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="assets\AssetHolder.h">
@@ -134,17 +137,14 @@
     <ClInclude Include="Rise\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rise\Scripts\Block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rise\States\DeathState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Sandbox\Assets\textures\Abe.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Sandbox\Assets\textures\John.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Sandbox\Assets\textures\null.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Rise\Assets\textures\Abe.png">
       <Filter>Resource Files</Filter>
     </Image>

@@ -32,7 +32,13 @@ namespace vtx
 			void Draw();
 
 			float PixelsToMeters(int pixels) { return pixels / pixelToMeterRatio; }
-			float MetersToPixels(int meters) { return meters * pixelToMeterRatio; }
+			float MetersToPixels(float meters) { return meters * pixelToMeterRatio; }
+
+			void SetXOffset(float num) { xOffset = num; }
+			void SetYOffset(float num) { yOffset = num; }
+
+			float GetXOffset() const { return xOffset; }
+			float GetYOffset() const { return yOffset; }
 
 			int GetNumEntitiesRendered() const { return numEntitiesRendered; }
 
@@ -41,7 +47,7 @@ namespace vtx
 			float pixelToMeterRatio;
 
 			// In Pixels
-			int xOffset, yOffset;
+			float xOffset, yOffset;
 
 		};
 

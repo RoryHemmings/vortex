@@ -7,12 +7,14 @@
 #include <memory>
 #include <string>
 #include <stdexcept>
-#include <list>
+#include <vector>
 
 #include "../../states/State.h"
 #include "../../core/Application.h"
 
 #include "../../util/Math.h"
+
+#include "../Scripts/Block.h"
 
 class GameState : public vtx::State
 {
@@ -21,7 +23,7 @@ public:
 	GameState(vtx::Application* app);
 
 	void Load();
-	void Unload() { entityCoordinator.Clear(); }
+	void Unload();
 	void Pause() { }
 	void Resume() { }
 
@@ -32,27 +34,41 @@ public:
 private:
 	void initAssets();
 	void initPlayer();
-	void initFloor();
+	void SetBlockCombos();
 	void initObstacles();
 
 	void controlPlayer();
-	void controlObstacles();
+	bool controlObstacles();
 
-	vtx::Entity createBeam(float x, float y, float friction = 0.3f);
+	void die();
 
-	sf::Text fpsMeter;
-	sf::Text drawnEntities;
+	//vtx::Entity createBeam(float x, float y, float friction = 0.3f);
+	Block createBlock(float x);
 
-	sf::Font font;
-	float delta;
-
+	// Entities
 	vtx::Entity player;
-	std::list<vtx::Entity> obstacles;
+	std::vector<std::vector<ObstacleInfo>> blockCombos;
+	std::vector<Block> blocks;
 
+	// Assets
 	sf::Texture playerTexture1;
 	sf::Texture playerTexture2;
-	sf::Texture beam;
+	sf::Texture short_beam;
+	sf::Texture long_beam;
 	sf::Texture empty;
+	sf::Texture buildings[5];
+	sf::Font font;
+
+	// Shortcuts
+	std::shared_ptr<vtx::systems::RenderSystem> renderSystem;
+	std::shared_ptr<vtx::systems::PhysicsSystem> physicsSystem;
+
+	// Misc.
+	sf::Text fpsMeter;
+	sf::Text drawnEntities;
+	float delta;
+
+	int blockNum;
 
 };
 

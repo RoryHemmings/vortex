@@ -32,6 +32,8 @@ namespace vtx
 					while (window.pollEvent(event)) {
 						if (event.type == sf::Event::Closed)
 							window.close();
+						if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+							window.close();
 					}
 
 					currentState.VariableUpdate(clock.getElapsedTime().asSeconds() - delta.asSeconds());
@@ -107,7 +109,8 @@ namespace vtx
 
 	void Application::initWindow()
 	{
-		window.create(sf::VideoMode(width, height), title);
+		window.create(sf::VideoMode(width, height), title, sf::Style::Fullscreen);
+		//window.create(sf::VideoMode(width, height), title);
 	}
 }
 
