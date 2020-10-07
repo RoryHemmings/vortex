@@ -1,7 +1,7 @@
 # Vortex Game Engine
 Custom 2d Game engine using box2d for physics and sfml for graphics
 
-Features
+# Features
 Advanced Entity Component System
   - Manages entities, components and systems independently. Very low load on cpu compared to object oriented based approach
   
